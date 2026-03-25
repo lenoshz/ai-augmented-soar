@@ -1,0 +1,12 @@
+{
+  "id": "aiAugmentedSoar",
+  "version": "1.0.0",
+  "kibanaVersion": "8.13.0",
+  "server": false,
+  "ui": true,
+  "description": "AI-Augmented SOAR: Kibana plugin providing enriched alert dashboard, MITRE ATT&CK heatmap, and analyst chat interface.",
+  "owner": {
+    "name": "AI-Augmented SOAR Team",
+    "githubTeam": "ai-augmented-soar"
+  }
+}
