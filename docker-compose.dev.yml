@@ -1,0 +1,15 @@
+# Usage: docker compose -f docker-compose.yml -f docker-compose.dev.yml up
+# This override mounts source code for hot-reload development.
+
+version: "3.8"
+
+services:
+  enrichment-service:
+    build:
+      context: ./enrichment-service
+      dockerfile: Dockerfile
+    volumes:
+      - ./enrichment-service:/app
+    command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+    environment:
+      - LOG_LEVEL=debug

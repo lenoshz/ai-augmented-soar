@@ -1,0 +1,61 @@
+{
+  "trigger": {
+    "schedule": {
+      "interval": "30s"
+    }
+  },
+  "input": {
+    "search": {
+      "request": {
+        "indices": [".alerts-security.alerts-default"],
+        "body": {
+          "size": 100,
+          "query": {
+            "bool": {
+              "must": [
+                {
+                  "range": {
+                    "@timestamp": {
+                      "gte": "now-30s"
+                    }
+                  }
+                }
+              ],
+              "must_not": [
+                {
+                  "term": {
+                    "ai_enriched": true
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    }
+  },
+  "condition": {
+    "compare": {
+      "ctx.payload.hits.total.value": {
+        "gt": 0
+      }
+    }
+  },
+  "actions": {
+    "enrich_alert": {
+      "foreach": "ctx.payload.hits.hits",
+      "max_iterations": 100,
+      "throttle_period": "30s",
+      "webhook": {
+        "method": "POST",
+        "host": "enrichment-service",
+        "port": 8000,
+        "path": "/api/v1/enrich",
+        "body": "{{#toJson}}ctx.payload._source{{/toJson}}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
+    }
+  }
+}
