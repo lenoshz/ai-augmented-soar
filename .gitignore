@@ -36,6 +36,5 @@ docker-compose.override.yml
 .DS_Store
 
 # Secrets
-.env
 .env.local
 .env.*.local

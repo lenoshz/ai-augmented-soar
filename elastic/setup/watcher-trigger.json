@@ -51,7 +51,7 @@
         "host": "enrichment-service",
         "port": 8000,
         "path": "/api/v1/enrich",
-        "body": "{{#toJson}}ctx.payload._source{{/toJson}}",
+        "body": "{{#toJson}}_source{{/toJson}}",
         "headers": {
           "Content-Type": "application/json"
         }
