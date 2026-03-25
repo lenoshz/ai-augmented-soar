@@ -37,6 +37,7 @@ class AnthropicClient:
         Retries on HTTP 429 (rate limit) and 529 (overload) with
         exponential back-off delays of 2, 4, and 8 seconds.
         """
+        # [0] is the initial attempt with no delay; subsequent elements are back-off delays.
         for attempt, delay in enumerate([0] + _RETRY_DELAYS):
             if delay:
                 logger.debug("Anthropic retry attempt %d – sleeping %ds", attempt, delay)

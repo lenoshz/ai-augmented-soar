@@ -75,7 +75,7 @@ class ThreatIntelClient:
                 )
                 if malicious > 0:
                     return f"VirusTotal: {ip} flagged malicious by {malicious} vendors"
-        except Exception as exc:
+        except httpx.RequestError as exc:
             logger.warning("VirusTotal IP lookup failed for %s: %s", ip, exc)
         return None
 
@@ -96,7 +96,7 @@ class ThreatIntelClient:
                 )
                 if malicious > 0:
                     return f"VirusTotal: hash {file_hash} flagged malicious by {malicious} vendors"
-        except Exception as exc:
+        except httpx.RequestError as exc:
             logger.warning("VirusTotal hash lookup failed for %s: %s", file_hash, exc)
         return None
 
@@ -113,7 +113,7 @@ class ThreatIntelClient:
                 score = data.get("data", {}).get("abuseConfidenceScore", 0)
                 if score > 50:
                     return f"AbuseIPDB: {ip} abuse confidence score {score}%"
-        except Exception as exc:
+        except httpx.RequestError as exc:
             logger.warning("AbuseIPDB lookup failed for %s: %s", ip, exc)
         return None
 

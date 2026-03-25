@@ -18,6 +18,7 @@ class Settings(BaseSettings):
     elasticsearch_url: str = "http://localhost:9200"
     elastic_password: str = "changeme"
     elastic_username: str = "elastic"
+    elastic_verify_certs: bool = False
 
     # Redis configuration
     redis_url: str = "redis://localhost:6379"

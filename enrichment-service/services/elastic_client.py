@@ -24,7 +24,7 @@ class ElasticClient:
         self._client = AsyncElasticsearch(
             hosts=[settings.elasticsearch_url],
             basic_auth=(settings.elastic_username, settings.elastic_password),
-            verify_certs=False,
+            verify_certs=settings.elastic_verify_certs,
         )
 
     async def write_enriched_alert(self, alert_id: str, doc: dict[str, Any]) -> None:
