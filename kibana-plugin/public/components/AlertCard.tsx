@@ -3,7 +3,7 @@
  * AI summary, MITRE context, response steps, and analyst tools.
  */
 
-import React, { useState } from 'react';
+import React from 'react';
 import {
   EuiAccordion,
   EuiBadge,
@@ -33,7 +33,6 @@ interface AlertCardProps {
 
 /** Card component rendering all enrichment data for a single alert. */
 export const AlertCard: React.FC<AlertCardProps> = ({ alert }) => {
-  const [chatOpen, setChatOpen] = useState<boolean>(false);
   const severityColor = SEVERITY_COLORS[alert.severity] ?? 'default';
 
   return (

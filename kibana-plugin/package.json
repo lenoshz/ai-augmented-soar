@@ -6,7 +6,7 @@
   "main": "target/public/index.js",
   "scripts": {
     "build": "tsc",
-    "lint": "eslint src --ext .ts,.tsx",
+    "lint": "eslint public --ext .ts,.tsx",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
