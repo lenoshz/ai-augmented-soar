@@ -1,0 +1,25 @@
+# Python artifacts
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+htmlcov/
+.coverage
+
+# Development and test files
+tests/
+.env
+.env.*
+*.log
+
+# Version control
+.git/
+.gitignore
+
+# Documentation
+*.md
+
+# IDE
+.vscode/
+.idea/
