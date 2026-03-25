@@ -7,6 +7,7 @@ Elasticsearch for persistence, and Redis for caching.
 
 import logging
 import uuid
+from contextlib import asynccontextmanager
 from datetime import datetime, timezone
 from typing import Any
 
@@ -33,12 +34,24 @@ logging.basicConfig(
 logger = logging.getLogger("ai-augmented-soar")
 
 # ---------------------------------------------------------------------------
-# FastAPI application
+# Lifespan and FastAPI application
 # ---------------------------------------------------------------------------
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):  # noqa: ARG001
+    """Manage startup and shutdown of external clients."""
+    yield
+    logger.info("Shutting down enrichment service – closing clients")
+    await elastic_client.close()
+    await threat_intel_client.close()
+
+
 app = FastAPI(
     title="AI-Augmented SOAR Enrichment Service",
     description="AI-powered security alert enrichment using Anthropic Claude and MITRE ATT&CK.",
     version="1.0.0",
+    lifespan=lifespan,
 )
 
 app.add_middleware(
@@ -173,14 +186,3 @@ async def health() -> dict[str, str]:
     }
 
 
-# ---------------------------------------------------------------------------
-# Shutdown handler
-# ---------------------------------------------------------------------------
-
-
-@app.on_event("shutdown")
-async def shutdown_event() -> None:
-    """Close external connections gracefully on service shutdown."""
-    logger.info("Shutting down enrichment service – closing clients")
-    await elastic_client.close()
-    await threat_intel_client.close()
